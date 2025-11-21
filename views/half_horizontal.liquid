@@ -1,0 +1,107 @@
+<div class="view view--half_horizontal">
+         <div class="flex flex--row w--full justyfy--between">
+          <span class="title">{{ league.name }}</span>
+          <span class="label label--small">
+            Updated {{ last_updated_data | date: "%Y-%m-%d %H:%M" }}
+          </span>
+        </div>
+
+
+  <div class="layout layout--col layout--left pt--10">
+    {%- assign row_limit = standings.results | size -%}
+    {%- if row_limit > 5 -%}
+      {%- assign row_limit = 5 -%}
+    {%- endif -%}
+
+    {%- assign first_half = row_limit | divided_by: 2 -%}
+    {%- assign remainder = row_limit | modulo: 2 -%}
+    {%- if remainder != 0 -%}
+      {%- assign first_half = first_half | plus: 1 -%}
+    {%- endif -%}
+    {%- assign second_half = row_limit | minus: first_half -%}
+
+    <!-- TWO COLUMNS -->
+    <div class="flex flex--row w--full">
+
+      <!-- LEFT COLUMN -->
+      <div class="layout layout--col layout--top w--full gap--xsmall">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Team</th>
+              <th style="text-align:right;">GW</th>
+              <th style="text-align:right;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in standings.results limit:first_half %}
+            {%- assign display_index = forloop.index -%}
+            <tr>
+              <td>
+                <span class="value value--xxsmall value--tnums">{{ display_index }}</span>
+              </td>
+              <td class="flex align--left gap--xxsmall">
+                <span class="title title--small mt--4">{{ row.entry_name }}</span>
+              </td>
+              <td style="text-align:right;">
+                <span class="value value--xxsmall value--tnums">{{ row.event_total }}</span>
+              </td>
+              <td style="text-align:right;">
+                <span class="value value--xxsmall value--tnums">{{ row.total }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="layout layout--col layout--top w--full gap--xsmall">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Team</th>
+              <th style="text-align:right;">GW</th>
+              <th style="text-align:right;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in standings.results offset:first_half limit:second_half %}
+            {%- assign display_index = first_half | plus: forloop.index -%}
+            <tr>
+              <td>
+                <span class="value value--xxsmall value--tnums">{{ display_index }}</span>
+              </td>
+              <td class="flex align--left gap--xxsmall">
+                <span class="title title--small mt--4">{{ row.entry_name }}</span>
+              </td>
+              <td style="text-align:right;">
+                <span class="value value--xxsmall value--tnums">{{ row.event_total }}</span>
+              </td>
+              <td style="text-align:right;">
+                <span class="value value--xxsmall value--tnums">{{ row.total }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer bar -->
+  <div class="title_bar">
+    <img class="image"
+         src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+    <span class="label label--small">Fantasy PL</span>
+  </div>
+
+</div>
