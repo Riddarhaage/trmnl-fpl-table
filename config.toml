@@ -1,0 +1,2 @@
+strategy = "polling"
+url = "http://localhost:4200/data?leagueId=1872622"

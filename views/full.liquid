@@ -1,0 +1,56 @@
+<div class="view view--full">
+
+  <div class="layout layout--col layout--left gap--large">
+    <!-- Header -->
+    <div class="flex flex--row flex--between w--full">
+
+      <img class="image" height="55"
+           src="https://cdn.freebiesupply.com/images/large/2x/premier-league-logo-black-and-white.png" />
+
+           <span class="label label--medium">
+             Updated {{ last_updated_data | date: "%Y-%m-%d %H:%M" }}
+           </span>
+           
+        </div>
+
+        <div class="flex flex--col gap--xsmall">
+          <span class="title">{{ league.name }}</span>
+        </div>
+
+    <!-- League Table -->
+    <table class="table" data-table-limit="true" data-table-max-height="auto">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th style="text-align:right;">GW</th>
+          <th style="text-align:right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for row in standings.results %}
+        <tr>
+          <td class="flex align--left gap--small">
+              <span class="title">{{ row.entry_name }}</span>
+              <span class="label text--gray-20">{{ row.player_name }}</span>
+          </td>
+          <td style="text-align:right;">
+            <span class="value value--tnums">{{ row.event_total }}</span>
+          </td>
+          <td style="text-align:right;">
+            <span class="value value--tnums">{{ row.total }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+  </div>
+
+<!-- Footer bar -->
+<div class="title_bar">
+  <img class="image"
+       src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+  <span class="title">Fantasy PL</span>
+</div>
