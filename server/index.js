@@ -28,6 +28,11 @@ const getFantasyTable = async (leagueId) => {
         throw new Error('Network response was not ok');
     }
     const data = await response.json();
+    // Sort by total points descending
+    data.standings.results = data.standings.results
+        .sort((a, b) => b.total - a.total)
+        .slice(0, 5);  // Keep only top 5
+        
     return data;
 };
 
