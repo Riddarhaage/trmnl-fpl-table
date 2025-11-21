@@ -1,0 +1,53 @@
+<div class="view view--quadrant">
+
+  <div class="layout layout--col layout--left">
+    <!-- Header -->
+    <div class="flex flex--row">
+      <span class="label label--medium mt--4">{{ league.name }}</span>
+            <span class="label label--small mt--4 ml--auto">
+         updated: {{ last_updated_data | date: "%Y-%m-%d" }}
+      </span>
+    </div>
+    <!-- Top 3 Table -->
+    <table class="table" data-table-limit="true">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th style="text-align:right;">GW</th>
+          <th style="text-align:right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% assign row_limit = standings.results | size %}
+        {% if row_limit > 3 %}
+          {% assign row_limit = 3 %}
+        {% endif %}
+
+        {% for row in standings.results limit:row_limit %}
+        <tr>
+          <td>
+            <span class="label label--medium">{{ row.rank }}</span>
+          </td>
+          <td class="align--left">
+            <span class="label label--medium">{{ row.entry_name }}</span>
+        </td>
+                <td style="text-align:right;">
+          <span class="value value--xxsmall value--tnums">{{ row.event_total }}</span>
+        </td>
+        <td style="text-align:right;">
+          <span class="value value--xxsmall value--tnums">{{ row.total }}</span>
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- Footer bar -->
+  <div class="title_bar">
+    <span class="label label--small">Fantasy PL</span>
+  </div>
+
+</div>
