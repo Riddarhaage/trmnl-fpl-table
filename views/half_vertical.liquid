@@ -1,0 +1,55 @@
+<div class="view view--half_vertical">
+
+  <div class="layout layout--col layout--left gap--medium">
+          <img class="image" height="55"
+           src="https://cdn.freebiesupply.com/images/large/2x/premier-league-logo-black-and-white.png" />
+
+    <!-- Header -->
+    <div class="flex flex--row flex--between w--full">
+      <span class="title title--small">{{ league.name }}</span>
+      <span class="label label--small">
+        {{ last_updated_data | date: "%Y-%m-%d" }}
+      </span>
+    </div>
+
+    <!-- League Table -->
+    <table class="table" data-table-limit="true" data-table-max-height="auto">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th style="text-align:right;">GW</th>
+          <th style="text-align:right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% assign row_limit = standings.results | size %}
+        {% if row_limit > 5 %}
+          {% assign row_limit = 5 %}
+        {% endif %}
+
+        {% for row in standings.results limit:row_limit %}
+        <tr>
+          <td class="align--left">
+            <span class="title title--small">{{ row.entry_name }}</span>
+          </td>
+          <td style="text-align:right;">
+            <span class="value value--small value--tnums">{{ row.event_total }}</span>
+          </td>
+          <td style="text-align:right;">
+            <span class="value value--small value--tnums">{{ row.total }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- Footer bar -->
+  <div class="title_bar">
+    <img class="image"
+         src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+    <span class="label label--small">Fantasy PL</span>
+  </div>
+
+</div>
